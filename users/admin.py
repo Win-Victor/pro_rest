@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from users.models import ProUser
+
+admin.site.register(ProUser)
+

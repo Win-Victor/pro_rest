@@ -10,4 +10,4 @@ class ProUser(AbstractUser):
     email = models.EmailField(unique=True, verbose_name='Электронная почта')
 
     def __str__(self):
-        return self.username, self.id
+        return self.id, self.username, self.email

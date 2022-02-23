@@ -1,7 +1,7 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import UserList from './components/UsersList';
+import UserList from './components/Users';
 import axios from "axios";
 
 

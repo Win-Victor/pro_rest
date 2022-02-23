@@ -9,7 +9,48 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            'users': []
+            'users': [
+                // {
+                //     "username": "taran",
+                //     "first_name": "Квентин",
+                //     "last_name": "Тарантино",
+                //     "birthday": "1963-03-27",
+                //     "email": "quen-taran@mail.ru"
+                // },
+                // {
+                //     "username": "Stan",
+                //     "first_name": "Стэнли",
+                //     "last_name": "Кубрик",
+                //     "birthday": "1928-06-26",
+                //     "email": "stan-kubrick@mail.ru"
+                // },
+                // {
+                //     "username": "Bob",
+                //     "first_name": "Роберт",
+                //     "last_name": "Земекис",
+                //     "birthday": "1951-05-14",
+                //     "email": "zem-rob@mail.ru"
+                // }, {
+                //     "username": "Стив",
+                //     "first_name": "Стивен",
+                //     "last_name": "Спилберг",
+                //     "birthday": "1946-12-18",
+                //     "email": "ono-it@mail.ru"
+                // }, {
+                //     "username": "Пит",
+                //     "first_name": "Питер",
+                //     "last_name": "Джексон",
+                //     "birthday": "1961-10-31",
+                //     "email": "pit-jec@mail.ru"
+                // }, {
+                //     "username": "Клинт",
+                //     "first_name": "Клинт",
+                //     "last_name": "Иствуд",
+                //     "birthday": "1930-05-31",
+                //     "email": "good-bad-ugly@mail.ru"
+                // }
+                //
+            ]
         }
     }
 

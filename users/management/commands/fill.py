@@ -22,4 +22,5 @@ class Command(BaseCommand):
         admin_user = ProUser.objects.create_superuser(
             username='Jimmy',
             email='django@geekshop.local',
-            password='rest365')
+            password='rest365'
+        )

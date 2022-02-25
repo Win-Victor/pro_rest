@@ -20,4 +20,4 @@ class Command(BaseCommand):
             ProUser.objects.create(**user)
 
 
-    admin_user = ProUser.objects.create_superuser(username='Jimmy', email='django@geekshop.local', password='rest365')
+        admin_user = ProUser.objects.create_superuser(username='Jimmy', email='django@geekshop.local', password='rest365')

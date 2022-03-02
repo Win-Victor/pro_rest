@@ -56,7 +56,7 @@ class App extends React.Component {
 
     componentDidMount() {
         axios
-            .get('http://127.0.0.1:8000/api/users/')
+            .get('http://127.0.0.1:8080/api/users/')
             .then(response => {
                 const users = response.data
                 this.setState(
@@ -71,7 +71,11 @@ class App extends React.Component {
     render() {
         return (
             <div>
+                <>Menu</>
+                <hr/>
                 <UserList users={this.state.users}/>
+                <hr/>
+                <>footer</>
             </div>
         )
     }

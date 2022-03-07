@@ -4,7 +4,7 @@ from django.db import models
 
 class Projects(models.Model):
     project_name = models.CharField(max_length=64, unique=True)
-    users = models.ManyToManyField(ProUser, many=True)
+    users = models.ManyToManyField(ProUser)
 
     def __str__(self):
         return f'{self.id}, {self.project_name}, {self.users}'

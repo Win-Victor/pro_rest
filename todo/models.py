@@ -9,5 +9,8 @@ class Projects(models.Model):
 
 class Notes(models.Model):
     project = models.ForeignKey(Projects, on_delete=models.CASCADE)
-    users = models.ManyToManyField(ProUser)
+    author = models.ForeignKey(ProUser, on_delete=models.SET_NULL, blank=True, null=True)
     text = models.CharField(max_length=256)
+    create_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)

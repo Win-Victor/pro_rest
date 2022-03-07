@@ -4,7 +4,10 @@ from django.db import models
 
 class Projects(models.Model):
     project_name = models.CharField(max_length=64, unique=True)
-    users = models.ManyToManyField(ProUser)
+    users = models.ManyToManyField(ProUser, many=True)
+
+    def __str__(self):
+        return f'{self.id}, {self.project_name}, {self.users}'
 
 
 class Notes(models.Model):
@@ -14,3 +17,7 @@ class Notes(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f'{self.id}, {self.project}, {self.author}, {self.text}, {self.create_at}, {self.updated_at},' \
+               f' {self.is_active}'

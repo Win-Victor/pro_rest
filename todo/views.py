@@ -8,24 +8,24 @@ from rest_framework.pagination import LimitOffsetPagination
 
 from users.models import ProUser
 
-LIMIT_PROJECT_PAGINATION = 10
-LIMIT_NOTES_PAGINATION = 20
-
-
-class ProjectLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = LIMIT_PROJECT_PAGINATION
-
-
-class NotesLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = LIMIT_NOTES_PAGINATION
+# LIMIT_PROJECT_PAGINATION = 10
+# LIMIT_NOTES_PAGINATION = 20
+#
+#
+# class ProjectLimitOffsetPagination(LimitOffsetPagination):
+#     default_limit = LIMIT_PROJECT_PAGINATION
+#
+#
+# class NotesLimitOffsetPagination(LimitOffsetPagination):
+#     default_limit = LIMIT_NOTES_PAGINATION
 
 
 class ProjectsViewSet(ModelViewSet):
-    pagination_class = ProjectLimitOffsetPagination
+    # pagination_class = ProjectLimitOffsetPagination
     serializer_class = ProjectsModelSerializer
     queryset = Projects.objects.all()
 
-    filterset_fields = ['project_name']
+    # filterset_fields = ['project_name']
 
     # def get_queryset(self):
     #     queryset = Projects.objects.all()
@@ -36,11 +36,11 @@ class ProjectsViewSet(ModelViewSet):
 
 
 class NotesViewSet(ModelViewSet):
-    pagination_class = NotesLimitOffsetPagination
+    # pagination_class = NotesLimitOffsetPagination
     serializer_class = NotesModelSerializer
     queryset = Notes.objects.all()
-    filterset_fields = ['project']
+    # filterset_fields = ['project']
 
-    def perform_destroy(self, instance):
-        instance.is_active = False
-        instance.save()
+    # def perform_destroy(self, instance):
+    #     instance.is_active = False
+    #     instance.save()

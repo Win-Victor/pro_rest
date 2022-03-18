@@ -2,7 +2,22 @@ import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import UserList from './components/Users';
+import ProjectsList from "./components/Projects";
+import NotesList from "./components/Notes";
+import UserProjects from "./components/UserProjects";
+import ProjectsNotes from "./components/ProjectsNotes";
 import axios from "axios";
+import {HashRouter, BrowserRouter, Route, Routes, Link, useLocation, Navigate} from 'react-router-dom'
+
+const NotFound = () => {
+    let location = useLocation()
+    return (
+        <div>
+            <hr/>
+            Page {location.pathname} not found
+        </div>
+    )
+}
 
 
 class App extends React.Component {
@@ -50,18 +65,42 @@ class App extends React.Component {
                 //     "email": "good-bad-ugly@mail.ru"
                 // }
                 //
-            ]
+            ],
+            'projects': [],
+            'notes': []
         }
     }
 
     componentDidMount() {
         axios
-            .get('http://127.0.0.1:8080/api/users/')
+            .get('http://127.0.0.1:8000/api/users/')
             .then(response => {
                 const users = response.data
                 this.setState(
                     {
                         'users': users
+                    }
+                )
+            })
+            .catch(error => console.log(error))
+        axios
+            .get('http://127.0.0.1:8000/api/projects/')
+            .then(response => {
+                const projects = response.data
+                this.setState(
+                    {
+                        'projects': projects
+                    }
+                )
+            })
+            .catch(error => console.log(error))
+        axios
+            .get('http://127.0.0.1:8000/api/notes/')
+            .then(response => {
+                const notes = response.data
+                this.setState(
+                    {
+                        'notes': notes
                     }
                 )
             })
@@ -73,7 +112,22 @@ class App extends React.Component {
             <div>
                 <>Menu</>
                 <hr/>
-                <UserList users={this.state.users}/>
+                <BrowserRouter>
+                    <nav>
+                        <li><Link to='/'>Users</Link></li>
+                        <li><Link to='/projects'>Projects</Link></li>
+                        <li><Link to='/notes'>Notes</Link></li>
+                    </nav>
+                    <Routes>
+                        <Route exact path='/' element={<UserList users={this.state.users}/>}/>
+                        <Route exact path='/users' element={<Navigate to='/'/>}/>
+                        <Route exact path='/projects' element={<ProjectsList projects={this.state.projects}/>}/>
+                        <Route exact path='/notes' element={<NotesList notes={this.state.notes}/>}/>
+                        <Route exact path='/user/:id' element={<UserProjects projects={this.state.projects}/>}/>
+                        <Route exact path='/project/:id' element={<ProjectsNotes notes={this.state.notes}/>}/>
+                        <Route exact path='*' element={<NotFound/>}/>
+                    </Routes>
+                </BrowserRouter>
                 <hr/>
                 <>footer</>
             </div>

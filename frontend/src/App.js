@@ -159,13 +159,14 @@ class App extends React.Component {
                 const token = response.data.token
                 // console.log(token)
                 localStorage.setItem('token', token)
+                localStorage.setItem('user', login)
                 this.setState({
                     'token': token,
                 }, this.getData)
             })
             .catch(error => console.log(error))
 
-        // console.log(login, password)
+        console.log('user = ', localStorage.user)
     }
 
 
@@ -186,6 +187,8 @@ class App extends React.Component {
                         <li><Link to='/'>Users</Link></li>
                         <li><Link to='/projects'>Projects</Link></li>
                         <li><Link to='/notes'>Notes</Link></li>
+                        <li>
+                            {this.isAuth() ? <div>Authorized user: {localStorage.user}</div> : <div>Please login</div>}</li>
                         <li>
                             {this.isAuth() ? <button onClick={() => this.logout()}>Logout</button> :
                                 <Link to='/login'>Login</Link>}

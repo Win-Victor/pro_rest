@@ -6,6 +6,7 @@ import ProjectsList from "./components/Projects";
 import NotesList from "./components/Notes";
 import UserProjects from "./components/UserProjects";
 import ProjectsNotes from "./components/ProjectsNotes";
+import LoginForm from "./components/LoginForm";
 import axios from "axios";
 import {HashRouter, BrowserRouter, Route, Routes, Link, useLocation, Navigate} from 'react-router-dom'
 
@@ -67,13 +68,16 @@ class App extends React.Component {
                 //
             ],
             'projects': [],
-            'notes': []
+            'notes': [],
+            'token': ''
         }
     }
 
-    componentDidMount() {
+    getData() {
+        let headers = this.getHeaders()
+
         axios
-            .get('http://127.0.0.1:8000/api/users/')
+            .get('http://127.0.0.1:8000/api/users/', {headers})
             .then(response => {
                 const users = response.data
                 this.setState(
@@ -82,9 +86,14 @@ class App extends React.Component {
                     }
                 )
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error)
+                this.setState({
+                    'users': []
+                })
+            })
         axios
-            .get('http://127.0.0.1:8000/api/projects/')
+            .get('http://127.0.0.1:8000/api/projects/', {headers})
             .then(response => {
                 const projects = response.data
                 this.setState(
@@ -93,9 +102,16 @@ class App extends React.Component {
                     }
                 )
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error)
+                this.setState(
+                    {
+                        'projects': []
+                    }
+                )
+            })
         axios
-            .get('http://127.0.0.1:8000/api/notes/')
+            .get('http://127.0.0.1:8000/api/notes/', {headers})
             .then(response => {
                 const notes = response.data
                 this.setState(
@@ -104,7 +120,60 @@ class App extends React.Component {
                     }
                 )
             })
+            .catch(error => {
+                    console.log(error)
+                    this.setState(
+                        {
+                            'notes': []
+                        })
+                }
+            )
+
+    }
+
+
+    componentDidMount() {
+        let token = localStorage.getItem('token')
+        this.setState({
+            'token': token
+        }, this.getData)
+    }
+
+    isAuth() {
+        return !!this.state.token
+    }
+
+    getHeaders() {
+        if (this.isAuth()) {
+            return {
+                'Authorization': 'Token ' + this.state.token
+            }
+        }
+        return {}
+    }
+
+    getToken(login, password) {
+        axios
+            .post('http://127.0.0.1:8000/api-auth-token/', {'username': login, 'password': password})
+            .then(response => {
+                const token = response.data.token
+                // console.log(token)
+                localStorage.setItem('token', token)
+                this.setState({
+                    'token': token,
+                }, this.getData)
+            })
             .catch(error => console.log(error))
+
+        // console.log(login, password)
+    }
+
+
+    logout() {
+        localStorage.setItem('token', '')
+        this.setState({
+            'token': ''
+        }, this.getData)
     }
 
     render() {
@@ -117,9 +186,15 @@ class App extends React.Component {
                         <li><Link to='/'>Users</Link></li>
                         <li><Link to='/projects'>Projects</Link></li>
                         <li><Link to='/notes'>Notes</Link></li>
+                        <li>
+                            {this.isAuth() ? <button onClick={() => this.logout()}>Logout</button> :
+                                <Link to='/login'>Login</Link>}
+                        </li>
                     </nav>
                     <Routes>
                         <Route exact path='/' element={<UserList users={this.state.users}/>}/>
+                        <Route exact path='/login'
+                               element={<LoginForm getToken={(login, password) => this.getToken(login, password)}/>}/>
                         <Route exact path='/users' element={<Navigate to='/'/>}/>
                         <Route exact path='/projects' element={<ProjectsList projects={this.state.projects}/>}/>
                         <Route exact path='/notes' element={<NotesList notes={this.state.notes}/>}/>

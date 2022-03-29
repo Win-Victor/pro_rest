@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, DjangoModelPer
 
 
 class ProUserViewSet(ModelViewSet):
-    permission_classes = [DjangoModelPermissions]
+    # permission_classes = [DjangoModelPermissions]
     # renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
     serializer_class = ProUserModelSerializer
     queryset = ProUser.objects.all()

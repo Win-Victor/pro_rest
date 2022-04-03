@@ -10,6 +10,8 @@ import LoginForm from "./components/LoginForm";
 import axios from "axios";
 import {HashRouter, BrowserRouter, Route, Routes, Link, useLocation, Navigate} from 'react-router-dom'
 
+const version = '2.0'
+
 const NotFound = () => {
     let location = useLocation()
     return (
@@ -146,10 +148,13 @@ class App extends React.Component {
     getHeaders() {
         if (this.isAuth()) {
             return {
-                'Authorization': 'Token ' + this.state.token
+                'Authorization': 'Token ' + this.state.token,
+                'Accept': `application/json; version=${version}`
             }
         }
-        return {}
+        return {
+            'Accept': 'application/json; version=2.0'
+        }
     }
 
     getToken(login, password) {
@@ -188,7 +193,8 @@ class App extends React.Component {
                         <li><Link to='/projects'>Projects</Link></li>
                         <li><Link to='/notes'>Notes</Link></li>
                         <li>
-                            {this.isAuth() ? <div>Authorized user: {localStorage.user}</div> : <div>Please login</div>}</li>
+                            {this.isAuth() ? <div>Authorized user: {localStorage.user}</div> :
+                                <div>Please login</div>}</li>
                         <li>
                             {this.isAuth() ? <button onClick={() => this.logout()}>Logout</button> :
                                 <Link to='/login'>Login</Link>}

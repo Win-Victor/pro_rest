@@ -12,6 +12,8 @@ const UserItem = ({user}) => {
             <td>{user.last_name}</td>
             <td>{user.birthday}</td>
             <td>{user.email}</td>
+            <td>{user.is_superuser.toString()}</td>
+            <td>{user.is_staff.toString()}</td>
         </tr>
     )
 }
@@ -24,6 +26,8 @@ const UserList = ({users}) => {
             <th>Last name</th>
             <th>Birthday</th>
             <th>Email</th>
+            <th>ISsuperuser</th>
+            <th>ISstaff</th>
             {users.map((user) => <UserItem user={user}/>)}
         </table>
     )

@@ -12,8 +12,8 @@ const UserItem = ({user}) => {
             <td>{user.last_name}</td>
             <td>{user.birthday}</td>
             <td>{user.email}</td>
-            <td>{user.is_superuser.toString()}</td>
-            <td>{user.is_staff.toString()}</td>
+            <td align="center" color>{user.is_superuser && String.fromCodePoint(parseInt("2713", 16))}</td>
+            <td align="center">{user.is_staff && String.fromCodePoint(parseInt("2713", 16))}</td>
         </tr>
     )
 }

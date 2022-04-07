@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_yasg',
     'corsheaders',
+    'graphene_django',
     'users',
     'todo',
     'django_filters',
@@ -134,6 +135,10 @@ REST_FRAMEWORK = {
 
 if DEBUG:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'].append('rest_framework.renderers.BrowsableAPIRenderer')
+
+GRAPHENE = {
+    "SCHEMA": "todo.schema.schema"
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

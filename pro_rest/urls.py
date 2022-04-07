@@ -22,12 +22,12 @@ from users.views import ProUserViewSet
 from todo.views import ProjectsViewSet, NotesViewSet
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from graphene_django.views import GraphQLView
 
 router = DefaultRouter()
 router.register('users', ProUserViewSet)
 router.register('projects', ProjectsViewSet)
 router.register('notes', NotesViewSet)
-
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -38,9 +38,8 @@ schema_view = get_schema_view(
         license=openapi.License(name='MIT')
     ),
     public=True,
-    permission_classes=(AllowAny, )
+    permission_classes=(AllowAny,)
 )
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -49,5 +48,6 @@ urlpatterns = [
     path('api-auth-token/', obtain_auth_token),
     # re_path(r'^api/(?P<version>\d\.\d)/users/', ProUserViewSet.as_view({'get': 'list'})),
     path('swagger/', schema_view.with_ui()),
+    path('graphql/', GraphQLView.as_view(graphiql=True)),
     re_path(r'^swagger(?P<format>\.json|\.yaml)', schema_view.without_ui())
 ]

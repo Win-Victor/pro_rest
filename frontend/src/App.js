@@ -9,6 +9,8 @@ import ProjectsNotes from "./components/ProjectsNotes";
 import LoginForm from "./components/LoginForm";
 import axios from "axios";
 import {HashRouter, BrowserRouter, Route, Routes, Link, useLocation, Navigate} from 'react-router-dom'
+import ProjectForm from "./components/ProjectForm";
+import NoteForm from "./components/NoteForm";
 
 const version = '2.0'
 
@@ -174,6 +176,63 @@ class App extends React.Component {
         console.log('user = ', localStorage.user)
     }
 
+    newNote(project, text) {
+        let headers = this.getHeaders()
+        console.log(project, text)
+        // axios
+        //     .post('http://127.0.0.1:8000/api/projects/', {'project_name': project_name, 'users': users}, {headers})
+        //     .then(response => {
+        //         this.getData()
+        //     })
+        //     .catch(error => {
+        //         console.log(error)
+        //     })
+    }
+
+
+    deleteNote(id) {
+        let headers = this.getHeaders()
+        console.log(id)
+        axios
+            .delete(`http://127.0.0.1:8000/api/notes/${id}`, {headers})
+            .then(response => {
+                this.setState({
+                    'notes': this.state.notes.filter((note) => note.id != id)
+                })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    newProject(project_name, users) {
+        let headers = this.getHeaders()
+        console.log(project_name, users)
+        axios
+            .post('http://127.0.0.1:8000/api/projects/', {'project_name': project_name, 'users': users}, {headers})
+            .then(response => {
+                this.getData()
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    deleteProject(id) {
+        let headers = this.getHeaders()
+        console.log(id)
+        axios
+            .delete(`http://127.0.0.1:8000/api/projects/${id}`, {headers})
+            .then(response => {
+                this.setState({
+                    'projects': this.state.projects.filter((project) => project.id != id)
+                })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
 
     logout() {
         localStorage.setItem('token', '')
@@ -191,7 +250,9 @@ class App extends React.Component {
                     <nav>
                         <li><Link to='/'>Users</Link></li>
                         <li><Link to='/projects'>Projects</Link></li>
+                        <li><Link to='/projects/create'>New Project</Link></li>
                         <li><Link to='/notes'>Notes</Link></li>
+                        <li><Link to='/notes/create'>New Note</Link></li>
                         <li>
                             {this.isAuth() ? <div>Authorized user: {localStorage.user}</div> :
                                 <div>Please login</div>}</li>
@@ -205,8 +266,17 @@ class App extends React.Component {
                         <Route exact path='/login'
                                element={<LoginForm getToken={(login, password) => this.getToken(login, password)}/>}/>
                         <Route exact path='/users' element={<Navigate to='/'/>}/>
-                        <Route exact path='/projects' element={<ProjectsList projects={this.state.projects}/>}/>
-                        <Route exact path='/notes' element={<NotesList notes={this.state.notes}/>}/>
+                        <Route exact path='/projects' element={
+                            <ProjectsList projects={this.state.projects} deleteProject={(id) =>
+                                this.deleteProject(id)}/>}/>
+                        <Route exact path='/projects/create' element = {<ProjectForm
+                            users={this.state.users} newProject={(project_name, users) =>
+                            this.newProject(project_name, users)}/>} />
+                        <Route exact path='/notes' element={
+                            <NotesList notes={this.state.notes} deleteNote={(id) =>
+                            this.deleteNote(id)}/>}/>
+                        <Route exact path='/notes/create' element = {<NoteForm project={this.state.project} newNote={(project, text) =>
+                            this.newNote(project, text)}/>} />
                         <Route exact path='/user/:id' element={<UserProjects projects={this.state.projects}/>}/>
                         <Route exact path='/project/:id' element={<ProjectsNotes notes={this.state.notes}/>}/>
                         <Route exact path='*' element={<NotFound/>}/>

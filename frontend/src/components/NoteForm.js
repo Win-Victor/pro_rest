@@ -48,6 +48,7 @@ class NoteForm extends React.Component {
                 <select onChange={(event) => this.handleProjectChange(event)}>
                     {this.props.project.map((project) => <option value={project.id}>{project.project_name}</option>)}
                 </select>
+
                 <input type="submit" value="Create" />
             </form>
         )

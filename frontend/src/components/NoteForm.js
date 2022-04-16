@@ -25,7 +25,7 @@ class NoteForm extends React.Component {
         }
 
         this.setState({
-            'project': project
+            'project': project[0]
         })
     }
 

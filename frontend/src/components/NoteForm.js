@@ -4,7 +4,7 @@ class NoteForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            'project': 1,
+            'project': 0,
             'text': ''
         }
     }
@@ -45,8 +45,9 @@ class NoteForm extends React.Component {
                     onChange={(event) => this.handleTextChange(event)}
                     value={this.state.text}
                 />
-                <select onChange={(event) => this.handleProjectChange(event)}>
-                    {this.props.project.map((project) => <option value={project.id}>{project.project_name}</option>)}
+                <select onChange={(event) => this.handleProjectChange(event)} >
+                    {this.props.project.map((project) => <option value={project.id} >{project.project_name}</option>)}
+                    <option selected value=""></option>
                 </select>
 
                 <input type="submit" value="Create" />

@@ -4,7 +4,7 @@ class NoteForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            'project': 0,
+            'project': 1,
             'text': ''
         }
     }

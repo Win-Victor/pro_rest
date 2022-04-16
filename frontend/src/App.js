@@ -180,7 +180,7 @@ class App extends React.Component {
         let headers = this.getHeaders()
         console.log(project, text)
         axios
-            .post('http://127.0.0.1:8000/api/notes/', {'text': text, 'project': project}, {headers})
+            .post('http://127.0.0.1:8000/api/notes/', {'project': project, 'text': text, }, {headers})
             .then(response => {
                 this.getData()
             })

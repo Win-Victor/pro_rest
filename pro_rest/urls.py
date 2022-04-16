@@ -23,6 +23,7 @@ from todo.views import ProjectsViewSet, NotesViewSet
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from graphene_django.views import GraphQLView
+from django.views.generic import TemplateView
 
 router = DefaultRouter()
 router.register('users', ProUserViewSet)
@@ -49,5 +50,6 @@ urlpatterns = [
     # re_path(r'^api/(?P<version>\d\.\d)/users/', ProUserViewSet.as_view({'get': 'list'})),
     path('swagger/', schema_view.with_ui()),
     path('graphql/', GraphQLView.as_view(graphiql=True)),
-    re_path(r'^swagger(?P<format>\.json|\.yaml)', schema_view.without_ui())
+    re_path(r'^swagger(?P<format>\.json|\.yaml)', schema_view.without_ui()),
+    path('', TemplateView.as_view(template_name='index.html')),
 ]
